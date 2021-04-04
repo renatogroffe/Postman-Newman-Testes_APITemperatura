@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "dcab6c2a-71ae-4ea6-8f06-a1b2541a4cc0",
+		"name": "ConversaoTemperaturas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requisicao Conversao",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/ConversorTemperaturas/Fahrenheit/{{tempFahrenheit}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ConversorTemperaturas",
+						"Fahrenheit",
+						"{{tempFahrenheit}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"if (pm.iterationData.get(\"tempFahrenheit\") != undefined) {",
+					"    var tempFahrenheitData = JSON.parse(pm.iterationData.get(\"tempFahrenheit\"));",
+					"    pm.collectionVariables.set(\"tempFahrenheit\", tempFahrenheitData);",
+					"",
+					"    if (tempFahrenheitData >= -459.67) {",
+					"        if (pm.iterationData.get(\"tempCelsius\") != undefined)",
+					"            pm.collectionVariables.set(\"tempCelsius\", pm.iterationData.get(\"tempCelsius\"));",
+					"",
+					"        if (pm.iterationData.get(\"tempKelvin\") != undefined)",
+					"            pm.collectionVariables.set(\"tempKelvin\", pm.iterationData.get(\"tempKelvin\"));",
+					"    }",
+					"    else {",
+					"        pm.collectionVariables.set(\"tempCelsius\", -999999999);",
+					"        pm.collectionVariables.set(\"tempKelvin\", -999999999);",
+					"    }",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.log(pm.collectionVariables.get(\"tempFahrenheit\"));",
+					"console.log(pm.collectionVariables.get(\"tempCelsius\"));",
+					"console.log(pm.collectionVariables.get(\"tempKelvin\"));",
+					"",
+					"var tempFahrenheit = JSON.parse(pm.collectionVariables.get(\"tempFahrenheit\"));",
+					"if (tempFahrenheit >= -459.67) {",
+					"",
+					"    pm.test(\"Retorno OK\", function() {",
+					"        pm.response.to.be.ok;",
+					"        pm.response.to.json;",
+					"        pm.response.to.be.withBody;",
+					"    });",
+					"",
+					"    var result = pm.response.json();",
+					"",
+					"    pm.test(\"Checar Valor Fahrenheit\", function() {",
+					"        pm.expect(result.fahrenheit).to.eql(",
+					"            JSON.parse(pm.collectionVariables.get(\"tempFahrenheit\"))",
+					"        );",
+					"    });",
+					"",
+					"    pm.test(\"Checar Valor Celsius\", function() {",
+					"        pm.expect(result.celsius).to.eql(",
+					"            JSON.parse(pm.collectionVariables.get(\"tempCelsius\"))",
+					"        );",
+					"    });",
+					"",
+					"    pm.test(\"Checar Valor Kelvin\", function() {",
+					"        pm.expect(result.kelvin).to.eql(",
+					"            JSON.parse(pm.collectionVariables.get(\"tempKelvin\"))",
+					"        );",
+					"    });",
+					"",
+					"}",
+					"else {",
+					"",
+					"    pm.test(\"Retorno Inválido\", function() {",
+					"        pm.response.to.be.badRequest;",
+					"    });",
+					"",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "tempFahrenheit",
+			"value": "212"
+		},
+		{
+			"key": "tempCelsius",
+			"value": "100"
+		},
+		{
+			"key": "tempKelvin",
+			"value": "373.15"
+		}
+	]
+}

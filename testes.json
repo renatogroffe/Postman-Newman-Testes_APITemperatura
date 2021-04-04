@@ -1,0 +1,36 @@
+[
+    {
+        "tempFahrenheit": 32,
+        "tempCelsius": 0,
+        "tempKelvin": 273.15
+    },
+    {
+        "tempFahrenheit": 212,
+        "tempCelsius": 100,
+        "tempKelvin": 373.15
+    },
+    {
+        "tempFahrenheit": 120.18,
+        "tempCelsius": 48.99,
+        "tempKelvin": 322.14
+    },
+    {
+        "tempFahrenheit": -500
+    },
+    {
+        "tempFahrenheit": -459.67,
+        "tempCelsius": -273.15,
+        "tempKelvin": 0
+    },
+    {
+        "tempFahrenheit": -459.68
+    },
+    {
+        "tempFahrenheit": 90.5,
+        "tempCelsius": 32.5,
+        "tempKelvin": 305.65
+    },
+    {
+        "tempFahrenheit": -1000.99
+    }
+]
